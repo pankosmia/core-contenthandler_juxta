@@ -1,8 +1,8 @@
 {
-  "name": "contenthandler-template",
-  "version": "0.0.1",
+  "name": "contenthandler-juxta",
+  "version": "0.2.0",
   "private": true,
-  "homepage": "/clients/contenthandler-template",
+  "homepage": "/clients/contenthandler-juxta",
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
