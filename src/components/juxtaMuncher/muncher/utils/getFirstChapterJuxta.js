@@ -19,13 +19,13 @@ export async function getFirstChapterJuxta(
     );
     if (!postResponse.ok) {
       enqueueSnackbar(
-        `${doI18n("pages:core-contenthandler_juta:error", i18nRef.current)}: ${postResponse.status}`,
+        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${postResponse.status}`,
         { variant: "error" },
       );
     }
   } else {
     enqueueSnackbar(
-      `${doI18n("pages:core-contenthandler_juta:error", i18nRef.current)}: ${jsonResponse.status}`,
+      `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${jsonResponse.status}`,
       { variant: "error" },
     );
   }

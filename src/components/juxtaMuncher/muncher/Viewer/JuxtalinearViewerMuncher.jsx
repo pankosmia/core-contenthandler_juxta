@@ -26,7 +26,7 @@ function JuxtalinearViewerMuncher({ metadata, Navigation, showNavigation }) {
       setIngredient(response.json);
     } else {
       enqueueSnackbar(
-        `${doI18n("pages:core-contenthandler_juta:error", i18nRef.current)}: ${response.status}`,
+        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
         { variant: "error" },
       );
       setIngredient([]);
