@@ -13,9 +13,20 @@ export async function getFirstChapterJuxta(
   if (responce.ok) {
     let [chapter, verse] = responce.json[0].chunks[0].source[0].cv.split(":");
 
-    await postEmptyJson(
+    let postResponse = await postEmptyJson(
       `/api/navigation/bcv/${bookCode}/${chapter}/${verse}`,
       debugRefCurr,
+    );
+    if (!postResponse.ok) {
+      enqueueSnackbar(
+        `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${postResponse.status}`,
+        { variant: "error" },
+      );
+    }
+  } else {
+    enqueueSnackbar(
+      `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${jsonResponse.status}`,
+      { variant: "error" },
     );
   }
 }

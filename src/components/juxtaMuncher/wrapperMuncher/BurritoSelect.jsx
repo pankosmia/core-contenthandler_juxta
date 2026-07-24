@@ -12,6 +12,13 @@ export function BurritoSelect({ flavor }) {
     async function getSummary() {
       if (!currentProjectRef.current) {
         let response = await getJson("/api/burrito/metadata/summaries");
+        if (!response.ok) {
+          enqueueSnackbar(
+            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${response.status}`,
+            { variant: "error" },
+          );
+          return;
+        }
         response = response.json;
         response = Object.entries(response).filter(
           ([bName, bInfo]) => bInfo.flavor === flavor,

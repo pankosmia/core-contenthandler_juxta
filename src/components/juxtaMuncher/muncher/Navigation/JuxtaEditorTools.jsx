@@ -92,6 +92,11 @@ function JuxtaEditorTools({
         if (jsonResponse.ok) {
           const JsonDraft = jsonResponse.json;
           setCurrentBookCode(systemBcv.bookCode);
+        } else {
+          enqueueSnackbar(
+            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${jsonResponse.status}`,
+            { variant: "error" },
+          );
         }
       }
     };

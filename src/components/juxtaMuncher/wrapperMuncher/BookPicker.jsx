@@ -27,6 +27,11 @@ function BookPicker({ setFirstChapter, disable = false }) {
         if (fullMetadataResponse.ok) {
           setContentBooks(fullMetadataResponse.json.book_codes);
           setCurrentBook(fullMetadataResponse.json.book_codes[0]);
+        } else {
+          enqueueSnackbar(
+            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            { variant: "error" },
+          );
         }
       }
     };

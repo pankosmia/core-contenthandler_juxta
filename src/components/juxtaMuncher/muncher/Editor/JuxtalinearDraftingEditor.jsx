@@ -120,6 +120,10 @@ function JuxtaDraftingEditor({ metadata, modified, setModified }) {
         if (response.ok) {
           setIngredient(response.json);
         } else {
+          enqueueSnackbar(
+            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${response.status}`,
+            { variant: "error" },
+          );
           setIngredient([]);
         }
       }

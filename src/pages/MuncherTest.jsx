@@ -23,6 +23,11 @@ export function MuncherTest() {
         if (fullMetadataResponse.ok) {
           const entry = fullMetadataResponse.json;
           setCurrentBurrito([projectPath, entry]);
+        } else {
+          enqueueSnackbar(
+            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            { variant: "error" },
+          );
         }
       }
     }
