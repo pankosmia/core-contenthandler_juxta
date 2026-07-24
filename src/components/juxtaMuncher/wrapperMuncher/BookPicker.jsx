@@ -29,7 +29,7 @@ function BookPicker({ setFirstChapter, disable = false }) {
           setCurrentBook(fullMetadataResponse.json.book_codes[0]);
         } else {
           enqueueSnackbar(
-            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            `${doI18n("pages:core-contenthandler_juta:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
             { variant: "error" },
           );
         }

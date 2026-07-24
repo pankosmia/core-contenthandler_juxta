@@ -14,7 +14,7 @@ export function BurritoSelect({ flavor }) {
         let response = await getJson("/api/burrito/metadata/summaries");
         if (!response.ok) {
           enqueueSnackbar(
-            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${response.status}`,
+            `${doI18n("pages:core-contenthandler_juta:error", i18nRef.current)}: ${response.status}`,
             { variant: "error" },
           );
           return;

@@ -94,7 +94,7 @@ function JuxtaEditorTools({
           setCurrentBookCode(systemBcv.bookCode);
         } else {
           enqueueSnackbar(
-            `${doI18n("pages:core-local-workspace:error", i18nRef.current)}: ${jsonResponse.status}`,
+            `${doI18n("pages:core-contenthandler_juta:error", i18nRef.current)}: ${jsonResponse.status}`,
             { variant: "error" },
           );
         }
