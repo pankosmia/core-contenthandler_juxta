@@ -1,4 +1,4 @@
-import { Button, TextField, Stack } from "@mui/material";
+import { Button, TextField, Stack, Typography } from "@mui/material";
 import { postEmptyJson } from "pankosmia-lib/http";
 import { useContext, useEffect, useState } from "react";
 import { bcvContext, debugContext } from "pankosmia-rcl";
@@ -90,6 +90,13 @@ export function BcvPicker() {
         Go to {bookCode} {chapter}:{verseStart}
         {verseEnd !== verseStart && `-${verseEnd}`}
       </Button>
+
+      <Typography>
+        Current BCV is : {bcvRef.current.bookCode} {bcvRef.current.chapterNum}:
+        {bcvRef.current.verseNum}
+        {bcvRef.current.verseNum !== bcvRef.current.endVerseNum &&
+          `-${bcvRef.current.endVerseNum}`}{" "}
+      </Typography>
     </Stack>
   );
 }
