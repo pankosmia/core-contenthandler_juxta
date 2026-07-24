@@ -10,9 +10,7 @@ export function BurritoSelect({ flavor }) {
 
   useEffect(() => {
     async function getSummary() {
-      console.log("ici");
       let response = await getJson("/api/burrito/metadata/summaries");
-      console.log(response);
       if (!response.ok) {
         enqueueSnackbar(
           `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
@@ -46,8 +44,7 @@ export function BurritoSelect({ flavor }) {
       );
     }
   }
-  console.log(filteredSummary);
-  console.log(flavor);
+
   useEffect(() => {
     if (currentBurrito) {
       newBurritoSelected();
