@@ -10,21 +10,30 @@ export function BurritoSelect({ flavor }) {
 
   useEffect(() => {
     async function getSummary() {
-      if (!currentProjectRef.current) {
-        let response = await getJson("/api/burrito/metadata/summaries");
-        if (!response.ok) {
-          enqueueSnackbar(
-            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
-            { variant: "error" },
-          );
-          return;
-        }
-        response = response.json;
-        response = Object.entries(response).filter(
-          ([bName, bInfo]) => bInfo.flavor === flavor,
+      console.log("ici");
+      let response = await getJson("/api/burrito/metadata/summaries");
+      console.log(response);
+      if (!response.ok) {
+        enqueueSnackbar(
+          `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
+          { variant: "error" },
         );
-        setFilteredSummary(response);
+        return;
+      }
+      response = response.json;
+      response = Object.entries(response).filter(
+        ([bName, bInfo]) => bInfo.flavor === flavor,
+      );
+      setFilteredSummary(response);
+
+      if (!currentProjectRef.current) {
         setCurrentBurrito(response[0]);
+      } else {
+        const path = `${currentProjectRef.current.source}/${currentProjectRef.current.organization}/${currentProjectRef.current.project}`;
+
+        const selected = response.find(([bName]) => bName === path);
+
+        setCurrentBurrito(selected ?? response[0]);
       }
     }
     getSummary();
@@ -37,6 +46,8 @@ export function BurritoSelect({ flavor }) {
       );
     }
   }
+  console.log(filteredSummary);
+  console.log(flavor);
   useEffect(() => {
     if (currentBurrito) {
       newBurritoSelected();
