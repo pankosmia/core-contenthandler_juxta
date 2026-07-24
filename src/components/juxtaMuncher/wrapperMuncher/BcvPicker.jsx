@@ -21,6 +21,9 @@ export function BcvPicker() {
   useEffect(() => {
     if (bcvRef.current) {
       setBookCode(bcvRef.current.bookCode);
+      setChapter(bcvRef.current.chapterNum);
+      setVerseStart(bcvRef.current.verseNum);
+      setVerseEnd(bcvRef.current.endVerseNum);
     }
   }, [bcvRef.current]);
   const pickerSx = {
