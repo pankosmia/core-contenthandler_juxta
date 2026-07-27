@@ -1,7 +1,7 @@
 {
   "name": "core-contenthandler_juxta",
   "version": "0.2.0",
-  "private": "false",
+  "private": false,
   "homepage": "/clients/core-contenthandler_juxta",
   "main": "munchers/juxta-muncher-rcl.umd.js",
   "module": "munchers/juxta-muncher-rcl.es.js",

@@ -1,7 +1,7 @@
 {
   "name": "pankosmia-juxta-muncher",
   "version": "0.2.0",
-  "private": "false",
+  "private": false,
   "homepage": "/clients/pankosmia-juxta-muncher",
   "main": "munchers/juxta-muncher-rcl.umd.js",
   "module": "munchers/juxta-muncher-rcl.es.js",
