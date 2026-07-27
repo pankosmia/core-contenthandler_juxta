@@ -1,5 +1,5 @@
 {
-  "id": "contenthandler-template",
+  "id": "core-contenthandler_juxta",
   "minServerVersion": "0.16.1",
   "require": {
     "net": false,
@@ -14,6 +14,20 @@
     },
     "stub_content": {
       "en": "Content goes here"
+    },
+    "saved": {
+      "en": "Saved",
+      "fr": "Sauvegardé",
+      "id": "Telah disimpan"
+    },
+    "save_error": {
+      "en": "Could not save",
+      "fr": "La sauvegarde a échoué",
+      "id": "Tidak dapat disimpan"
+    },
+    "error": {
+      "en": "Error happened :",
+      "fr": "Une erreur est survenue: "
     }
   }
 }
