@@ -1,8 +1,8 @@
 {
   "name": "pankosmia-juxta-muncher",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "private": false,
-  "homepage": "/clients/pankosmia-juxta-muncher",
+  "homepage": "https://github.com/pankosmia/core-contenthandler_juxta",
   "main": "munchersPackageExport/juxta-muncher-rcl.umd.js",
   "module": "munchersPackageExport/juxta-muncher-rcl.es.js",
   "files": [
