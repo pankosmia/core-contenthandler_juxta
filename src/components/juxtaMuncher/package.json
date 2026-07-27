@@ -1,12 +1,12 @@
 {
   "name": "pankosmia-juxta-muncher",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "private": false,
   "homepage": "/clients/pankosmia-juxta-muncher",
-  "main": "munchers/juxta-muncher-rcl.umd.js",
-  "module": "munchers/juxta-muncher-rcl.es.js",
+  "main": "munchersPackageExport/juxta-muncher-rcl.umd.js",
+  "module": "munchersPackageExport/juxta-muncher-rcl.es.js",
   "files": [
-    "munchers"
+    "munchersPackageExport"
   ],
   "dependencies": {
     "@emotion/react": "^11.13.3",

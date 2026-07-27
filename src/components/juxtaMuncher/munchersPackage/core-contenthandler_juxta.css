@@ -1,0 +1,21 @@
+#download-link {
+  text-decoration: none;
+  color: #fff;
+}
+.chunk-row:hover {
+  background-color: #87cefa4d;
+}
+div.draggable {
+  border-color: #121212;
+  border-width: 1em;
+}
+@media (prefers-color-scheme: dark) {
+  .source-text {
+    color: #fff;
+  }
+}
+@media (prefers-color-scheme: light) {
+  .source-text {
+    color: #121212;
+  }
+}

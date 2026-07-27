@@ -3,11 +3,6 @@
   "version": "0.2.0",
   "private": false,
   "homepage": "/clients/core-contenthandler_juxta",
-  "main": "munchers/juxta-muncher-rcl.umd.js",
-  "module": "munchers/juxta-muncher-rcl.es.js",
-  "files": [
-    "munchers"
-  ],
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -33,7 +28,7 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "scripts": {
-    "publish": "npm run build:package  && cd ./src/components/juxtaMuncher && npm publish",
+    "publish": "npm run build:package  && cd ./src/components/juxtaMuncher && npm publish --dry-run",
     "build": "vite build",
     "build:package": "vite build --mode isMuncher",
     "dev": "vite",

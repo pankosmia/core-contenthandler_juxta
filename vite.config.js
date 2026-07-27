@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
     },
     build: isMuncher
       ? {
-          outDir: "munchers",
+          outDir: "src/components/juxtaMuncher/munchersPackageExport",
           emptyOutDir: true,
           sourcemap: true,
 

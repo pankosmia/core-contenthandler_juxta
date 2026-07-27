@@ -1,6 +1,7 @@
 .idea/
 build/
 munchers/
+munchersPackageExport/
 # Logs
 logs
 *.log
