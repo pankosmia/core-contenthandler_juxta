@@ -27,12 +27,13 @@ export default defineConfig(({ mode }) => {
           sourcemap: true,
 
           rollupOptions: {
-            external: ["react", "react-dom"],
+            external: ["react", "react-dom", "react-router-dom"],
             output: {
               name: "juxtaMunchersRcl",
               globals: {
                 react: "React",
                 "react-dom": "ReactDOM",
+                "react-router-dom": "ReactRouterDOM",
               },
             },
           },

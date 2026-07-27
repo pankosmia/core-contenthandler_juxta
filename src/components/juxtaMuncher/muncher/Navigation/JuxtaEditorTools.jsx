@@ -2,18 +2,13 @@ import { Box, Grid2, IconButton, Tooltip } from "@mui/material";
 // import LayoutIcon from "../../../TextTranslation/SimplifiedEditor/layouts/LayoutIcon";
 import BookPicker from "./BookPicker";
 import md5sum from "md5";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getJson, postEmptyJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import { useNavigate } from "react-router-dom";
 import JuxtaSaveButton from "./JuxtaSaveButton";
 import JuxtaSentencesNav from "./JuxtaSentencesNav";
 import { getFirstChapterJuxta } from "../utils/getFirstChapterJuxta";
-import {
-  bcvContext as BcvContext,
-  debugContext as DebugContext,
-  i18nContext,
-} from "pankosmia-rcl";
 
 function JuxtaEditorTools({
   metadata,
@@ -24,10 +19,11 @@ function JuxtaEditorTools({
   curIndex,
   setCurIndex,
   sentences,
+  bcvRef,
+  debugRef,
+  i18nRef,
+  currentProjectRef,
 }) {
-  const { systemBcv } = useContext(BcvContext);
-  const { debugRef } = useContext(DebugContext);
-  const { i18nRef } = useContext(i18nContext);
   const [modified, setModified] = useState(false);
   const navigate = useNavigate();
 
@@ -84,14 +80,17 @@ function JuxtaEditorTools({
 
   useEffect(() => {
     const doChapterNumbers = async () => {
-      if (systemBcv?.bookCode && systemBcv.bookCode !== currentBookCode) {
+      if (
+        bcvRef.current?.bookCode &&
+        bcvRef.current.bookCode !== currentBookCode
+      ) {
         let jsonResponse = await getJson(
-          `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${systemBcv.bookCode}.json`,
+          `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${bcvRef.current.bookCode}.json`,
           debugRef.current,
         );
         if (jsonResponse.ok) {
           const JsonDraft = jsonResponse.json;
-          setCurrentBookCode(systemBcv.bookCode);
+          setCurrentBookCode(bcvRef.current.bookCode);
         } else {
           enqueueSnackbar(
             `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${jsonResponse.status}`,
@@ -102,7 +101,7 @@ function JuxtaEditorTools({
     };
     doChapterNumbers().then();
   }, [
-    systemBcv.bookCode,
+    bcvRef.current.bookCode,
     metadata,
     currentBookCode,
     setCurrentBookCode,
@@ -148,12 +147,13 @@ function JuxtaEditorTools({
         <Grid2 display="flex" gap={1}>
           <JuxtaSaveButton
             metadata={metadata}
-            systemBcv={systemBcv}
+            bcvRef={bcvRef}
             modified={!modified}
             md5sumScriptureJson={md5sumScriptureJson}
             setMd5sumScriptureJson={setMd5sumScriptureJson}
             sentences={sentences}
             curIndex={curIndex}
+            i18nRef={i18nRef}
           />
         </Grid2>
 
@@ -161,6 +161,10 @@ function JuxtaEditorTools({
           <BookPicker
             disable={modified}
             setFirstChapter={getFirstChapterJuxta}
+            bcvRef={bcvRef}
+            debugRef={debugRef}
+            i18nRef={i18nRef}
+            currentProjectRef={currentProjectRef}
           />
           <JuxtaSentencesNav
             onPrevHandler={onPrevHandler}

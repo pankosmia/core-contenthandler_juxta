@@ -6,9 +6,15 @@ import md5sum from "md5";
 import JuxtaEditorTools from "../Navigation/JuxtaEditorTools";
 import JuxtaEditable from "./EditorTools/JuxtaEditable";
 
-function JuxtaDraftingEditor({ metadata, modified, setModified }) {
-  const { debugRef } = useContext(DebugContext);
-
+function JuxtaDraftingEditor({
+  metadata,
+  modified,
+  setModified,
+  bcvRef,
+  debugRef,
+  i18nRef,
+  currentProjectRef,
+}) {
   const [md5sumScriptureJson, setMd5sumScriptureJson] = useState([]);
   const [currentBookCode, setCurrentBookCode] = useState(null);
   const [ingredient, setIngredient] = useState(null);
@@ -145,6 +151,10 @@ function JuxtaDraftingEditor({ metadata, modified, setModified }) {
         curIndex={curIndex}
         setCurIndex={setCurIndex}
         sentences={sentences}
+        bcvRef={bcvRef}
+        debugRef={debugRef}
+        i18nRef={i18nRef}
+        currentProjectRef={currentProjectRef}
       />
       {/** If SB does not specify direction then it is set here, otherwise it has already been set per SB in WorkspaceCard */}
       <Box dir={!sbScriptDirSet ? textDir : undefined}>

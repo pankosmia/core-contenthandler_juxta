@@ -9,16 +9,15 @@ import { i18nContext as I18nContext } from "pankosmia-rcl";
 
 function JuxtaSaveButton({
   metadata,
-  systemBcv,
+  bcvRef,
   modified,
   setModified,
   md5sumScriptureJson,
   setMd5sumScriptureJson,
   sentences,
   curIndex,
+  i18nRef,
 }) {
-  const { i18nRef } = useContext(I18nContext);
-
   const handleSaveJson = async (debugBool) => {
     const s = [...sentences];
     s[0].chunks
@@ -28,7 +27,7 @@ function JuxtaSaveButton({
       });
     const payload = { payload: JSON.stringify(s, null, 2) };
     const response = await postJson(
-      `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${systemBcv.bookCode}.json`,
+      `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${bcvRef.bookCode}.json`,
       JSON.stringify(payload),
       debugBool,
     );

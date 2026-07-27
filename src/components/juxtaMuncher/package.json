@@ -1,6 +1,6 @@
 {
   "name": "pankosmia-juxta-muncher",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "private": false,
   "homepage": "https://github.com/pankosmia/core-contenthandler_juxta",
   "main": "munchersPackageExport/juxta-muncher-rcl.umd.js",
@@ -15,10 +15,7 @@
     "@mui/material": "^6.1.5",
     "md5": "^2.3.0",
     "pankosmia-lib": "^0.0.3",
-    "pankosmia-rcl": "0.4.0",
-    "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0",
-    "react-router-dom": "^7.9.4"
+    "pankosmia-rcl": "0.4.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -29,7 +26,8 @@
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
-    "react-dom": "^17.0.0 || ^18.0.0"
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^6.27.0"
   },
   "scripts": {
     "build": "vite build",

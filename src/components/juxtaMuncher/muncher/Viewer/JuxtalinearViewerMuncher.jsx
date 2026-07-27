@@ -10,17 +10,22 @@ import { getJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import Juxta2Verbs from "./ViewerTools/juxta2verbs";
 
-function JuxtalinearViewerMuncher({ metadata, Navigation, showNavigation }) {
+function JuxtalinearViewerMuncher({
+  metadata,
+  Navigation,
+  showNavigation,
+  bcvRef,
+  debugRef,
+  i18nRef,
+}) {
   const [ingredient, setIngredient] = useState([]);
-  const { systemBcv } = useContext(BcvContext);
-  const { debugRef } = useContext(DebugContext);
-  const { i18nRef } = useContext(I18nContext);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedWordJuxta, setSelectedWordJuxta] = useState(null);
   const [selectedMorph, setSelectedMorph] = useState([]);
 
   const getAllData = async () => {
-    const ingredientLink = `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${systemBcv.bookCode}.json`;
+    const ingredientLink = `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${bcvRef.current.bookCode}.json`;
     let response = await getJson(ingredientLink, debugRef.current);
     if (response.ok) {
       setIngredient(response.json);
@@ -34,12 +39,13 @@ function JuxtalinearViewerMuncher({ metadata, Navigation, showNavigation }) {
   };
   useEffect(() => {
     getAllData().then();
-  }, [systemBcv]);
+  }, [bcvRef.current]);
 
   const sentencesForVerse = ingredient.filter((i) =>
     i.chunks.some((c) =>
       c.source.some(
-        (s) => s.cv === `${systemBcv.chapterNum}:${systemBcv.verseNum}`,
+        (s) =>
+          s.cv === `${bcvRef.current.chapterNum}:${bcvRef.current.verseNum}`,
       ),
     ),
   );
@@ -65,7 +71,7 @@ function JuxtalinearViewerMuncher({ metadata, Navigation, showNavigation }) {
   return (
     <Stack sx={{ p: 1, alignItems: "center" }}>
       {/* {showNavigation && <Navigation/>} */}
-      <h5>{`(${systemBcv.bookCode} ${sentencePrintRef})`}</h5>
+      <h5>{`(${bcvRef.current.bookCode} ${sentencePrintRef})`}</h5>
       <div>
         {ingredient.length > 0 ? (
           <Grid2 container>

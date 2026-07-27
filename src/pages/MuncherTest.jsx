@@ -1,5 +1,10 @@
 import { Box } from "@mui/material";
-import { currentProjectContext, bcvContext } from "pankosmia-rcl";
+import {
+  currentProjectContext,
+  bcvContext,
+  debugContext,
+  i18nContext,
+} from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
 import JuxtaDraftingEditor from "../components/juxtaMuncher/muncher/Editor/JuxtalinearDraftingEditor";
@@ -10,6 +15,9 @@ import { WrapperNav } from "../components/juxtaMuncher/wrapperMuncher/WrapperNav
 export function MuncherTest() {
   const { bcvRef } = useContext(bcvContext);
   const { currentProjectRef } = useContext(currentProjectContext);
+  const { debugRef } = useContext(debugContext);
+  const { i18nRef } = useContext(i18nContext);
+
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
 
@@ -57,6 +65,9 @@ export function MuncherTest() {
             <JuxtalinearViewerMuncher
               key={metadata.local_path}
               metadata={metadata}
+              bcvRef={bcvRef}
+              debugRef={debugRef}
+              i18nRef={i18nRef}
             />
           </Box>
         )}
@@ -68,6 +79,10 @@ export function MuncherTest() {
               modified={modified}
               setModified={setModified}
               metadata={metadata}
+              bcvRef={bcvRef}
+              debugRef={debugRef}
+              i18nRef={i18nRef}
+              currentProjectRef={currentProjectRef}
             />
           </Box>
         )}
