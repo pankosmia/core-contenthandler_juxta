@@ -43,10 +43,16 @@ function JuxtalinearViewerMuncher({
 
   const sentencesForVerse = ingredient.filter((i) =>
     i.chunks.some((c) =>
-      c.source.some(
-        (s) =>
-          s.cv === `${bcvRef.current.chapterNum}:${bcvRef.current.verseNum}`,
-      ),
+      c.source.some((s) => {
+        const [cvChapter, cvVerse] = s.cv.split(":").map(Number);
+        const endVerseNum =
+          bcvRef.current.endVerseNum ?? bcvRef.current.verseNum;
+        return (
+          cvChapter === bcvRef.current.chapterNum &&
+          cvVerse >= bcvRef.current.verseNum &&
+          cvVerse <= endVerseNum
+        );
+      }),
     ),
   );
 
