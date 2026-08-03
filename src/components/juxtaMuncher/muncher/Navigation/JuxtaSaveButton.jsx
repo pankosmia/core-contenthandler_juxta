@@ -27,7 +27,7 @@ function JuxtaSaveButton({
       });
     const payload = { payload: JSON.stringify(s, null, 2) };
     const response = await postJson(
-      `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${bcvRef.bookCode}.json`,
+      `/api/burrito/ingredient/raw/${metadata.local_path}?ipath=${bcvRef.current.bookCode}.json`,
       JSON.stringify(payload),
       debugBool,
     );
