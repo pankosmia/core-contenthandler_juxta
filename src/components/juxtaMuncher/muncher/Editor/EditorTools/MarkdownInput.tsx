@@ -1,48 +1,55 @@
-import React, { useState } from "react";
-import { Button, Input, Stack, InputProps, Box } from "@mui/material";
-import Markdown from "react-markdown";
-import { Edit } from "@mui/icons-material";
-import { CheckBox } from "@mui/icons-material";
+import { Box, Input, InputProps } from "@mui/material";
+
 export const MarkdownInput = (props: InputProps) => {
-  const value = (props.value as string) ?? "";
+  const value = String(props.value ?? "");
 
   return (
     <Box
-      display="inline-flex"
-      minWidth="30px"
-      maxWidth="100%"
-      position="relative"
-      minHeight="100%"
+      sx={{
+        position: "relative",
+        width: "100%",
+        minWidth: 0,
+        minHeight: "100%",
+      }}
     >
+      {/* Invisible content determines the height */}
       <Box
         component="span"
         sx={{
           visibility: "hidden",
+          display: "block",
+          width: "100%",
+          minHeight: "40px",
+
           whiteSpace: "pre-wrap",
           overflowWrap: "break-word",
           wordBreak: "break-word",
+
           font: "inherit",
           fontSize: "1rem",
-          pl: "8px",
+
+          px: "8px",
           pr: "30px",
-          minWidth: "30px",
-          maxWidth: "100%",
-          display: "block",
+          boxSizing: "border-box",
         }}
       >
         {value || " "}
       </Box>
+
       <Input
+        {...props}
         multiline
         maxRows={6}
+        fullWidth
         sx={{
-          background: "lightgrey",
-          pl: "8px",
-
           position: "absolute",
           inset: 0,
+          p: 1,
           width: "100%",
           height: "100%",
+
+          backgroundColor: "lightgrey",
+
           "& textarea": {
             padding: 0,
             resize: "none",
@@ -50,8 +57,9 @@ export const MarkdownInput = (props: InputProps) => {
             overflowWrap: "break-word",
             wordBreak: "break-word",
           },
+
+          ...props.sx,
         }}
-        {...props}
       />
     </Box>
   );

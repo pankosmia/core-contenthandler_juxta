@@ -1,4 +1,4 @@
-import { Box, Grid2, IconButton, Tooltip } from "@mui/material";
+import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 // import LayoutIcon from "../../../TextTranslation/SimplifiedEditor/layouts/LayoutIcon";
 import BookPicker from "./BookPicker";
 import md5sum from "md5";
@@ -138,13 +138,15 @@ function JuxtaEditorTools({
         display: "flex",
       }}
     >
-      <Grid2
+      <Grid
         container
-        alignItems="center"
-        justifyContent="space-between"
-        width="100%"
+        sx={{
+          alignItems: "center",
+          width: "100%",
+          justifyContent: "space-between",
+        }}
       >
-        <Grid2 display="flex" gap={1}>
+        <Box sx={{ display: "flex" }} gap={1}>
           <JuxtaSaveButton
             metadata={metadata}
             bcvRef={bcvRef}
@@ -155,9 +157,9 @@ function JuxtaEditorTools({
             curIndex={curIndex}
             i18nRef={i18nRef}
           />
-        </Grid2>
+        </Box>
 
-        <Grid2 display="flex" gap={1}>
+        <Box sx={{ display: "flex" }} gap={1}>
           <BookPicker
             disable={modified}
             setFirstChapter={getFirstChapterJuxta}
@@ -177,8 +179,8 @@ function JuxtaEditorTools({
             endVerse={endVerse}
             modified={modified}
           />
-        </Grid2>
-        <Grid2 display="flex" gap={1}>
+        </Box>
+        <Box display="flex" gap={1}>
           <Tooltip
             title={doI18n(
               "pages:core-local-workspace:button_edit",
@@ -199,8 +201,8 @@ function JuxtaEditorTools({
               {/* <LayoutIcon /> */}
             </IconButton>
           </Tooltip>
-        </Grid2>
-      </Grid2>
+        </Box>
+      </Grid>
     </Box>
   );
 }

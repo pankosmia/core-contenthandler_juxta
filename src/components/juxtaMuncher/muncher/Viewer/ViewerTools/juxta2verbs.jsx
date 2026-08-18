@@ -1,4 +1,4 @@
-import { Box, Grid2, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
 import { useContext } from "react";
 import { i18nContext as I18nContext, debugContext } from "pankosmia-rcl";
@@ -59,14 +59,14 @@ export default function Juxta2Verbs({ morphArray, lemma }) {
   };
   return (
     <Box sx={{ p: 2 }}>
-      <Grid2 container>
-        <Grid2 item size={12}>
+      <Grid container>
+        <Grid size={12}>
           <Typography>{lemma}</Typography>
-        </Grid2>
-        <Grid2 item size={12}>
+        </Grid>
+        <Grid size={12}>
           {morphString && <Typography>{morphSummary(morphArray)}</Typography>}
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

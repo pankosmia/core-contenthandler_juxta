@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { Box, Grid2, Popover, Stack, Typography } from "@mui/material";
+import { Box, Grid, Popover, Stack, Typography } from "@mui/material";
 
 import {
   i18nContext as I18nContext,
@@ -80,9 +80,9 @@ function JuxtalinearViewerMuncher({
       <h5>{`(${bcvRef.current.bookCode} ${sentencePrintRef})`}</h5>
       <div>
         {ingredient.length > 0 ? (
-          <Grid2 container>
+          <Grid container>
             {sentencesForVerses.map((s, id) => (
-              <Grid2
+              <Grid
                 key={id}
                 container
                 size={12}
@@ -92,9 +92,8 @@ function JuxtalinearViewerMuncher({
               >
                 {s.chunks.map((c, id2) => (
                   <>
-                    <Grid2
+                    <Grid
                       key={id2}
-                      item
                       size={6}
                       spacing={0}
                       sx={{ p: 0, m: 0 }}
@@ -103,11 +102,15 @@ function JuxtalinearViewerMuncher({
                     >
                       <Box
                         key={`${id}${id2}`}
-                        display="flex"
-                        justifyContent="flex-end"
-                        alignContent="flex-end"
-                        alignItems="flex-end"
-                        sx={{ fontSize: "small", pr: 1, textAlign: "right" }}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-end",
+                          alignContent: "flex-end",
+                          alignItems: "flex-end",
+                          fontSize: "small",
+                          pr: 1,
+                          textAlign: "right",
+                        }}
                       >
                         {c.source.map((s, idx) => {
                           const popoverId = `${s.content}-${idx}`;
@@ -149,20 +152,19 @@ function JuxtalinearViewerMuncher({
                           );
                         })}
                       </Box>
-                    </Grid2>
-                    <Grid2
-                      item
+                    </Grid>
+                    <Grid
                       size={6}
                       sx={{ fontSize: "small", pl: 1, m: 0 }}
                       spacing={0}
                     >
                       {c.gloss}
-                    </Grid2>
+                    </Grid>
                   </>
                 ))}
-              </Grid2>
+              </Grid>
             ))}
-          </Grid2>
+          </Grid>
         ) : (
           `${doI18n("pages:core-local-workspace:no_juxta", i18nRef.current)}`
         )}

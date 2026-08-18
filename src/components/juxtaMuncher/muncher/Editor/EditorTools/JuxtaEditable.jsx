@@ -168,8 +168,8 @@ function JuxtaEditable({
         <DragDropContext onDragEnd={onDragEnd}>
           {itemArrays[curIndex]?.map((items, n) => (
             <Grid container key={n}>
-              <Grid item sm={6} pl={2} py={1}>
-                <Stack direction="row" justifyContent="flex-end">
+              <Grid size={{ sm: 6 }}>
+                <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
                   <Droppable droppableId={`${n}`} direction="horizontal">
                     {(provided, snapshot) => (
                       <div
@@ -229,7 +229,7 @@ function JuxtaEditable({
                 </Stack>
               </Grid>
 
-              <Grid item sm={6} pr={2} py={1}>
+              <Grid>
                 <MarkdownInput
                   value={items.gloss}
                   onChange={(e) => glossChangeHandler(e, n)}
