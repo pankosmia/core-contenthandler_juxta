@@ -1,12 +1,8 @@
 import { Box, Grid, Typography } from "@mui/material";
 import { doI18n } from "pankosmia-lib/i18n";
-import { useContext } from "react";
 import { i18nContext as I18nContext, debugContext } from "pankosmia-rcl";
 
-export default function Juxta2Verbs({ morphArray, lemma }) {
-  const { i18nRef } = useContext(I18nContext);
-  const { debugRef } = useContext(debugContext);
-
+export default function Juxta2Verbs({ morphArray, lemma, i18nRef, debugRef }) {
   const morphLookup = [
     {
       I: "ind",

@@ -1,6 +1,5 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useState } from "react";
 import { getJson } from "pankosmia-lib/http";
-import { debugContext as DebugContext } from "pankosmia-rcl";
 import { Box, Typography } from "@mui/material";
 import md5sum from "md5";
 import JuxtaEditorTools from "../Navigation/JuxtaEditorTools";
