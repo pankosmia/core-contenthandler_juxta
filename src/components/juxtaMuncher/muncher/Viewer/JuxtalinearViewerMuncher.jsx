@@ -1,11 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Box, Grid, Popover, Stack, Typography } from "@mui/material";
-
-import {
-  i18nContext as I18nContext,
-  debugContext as DebugContext,
-  bcvContext as BcvContext,
-} from "pankosmia-rcl";
 import { getJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import Juxta2Verbs from "./ViewerTools/juxta2verbs";
@@ -144,6 +138,8 @@ function JuxtalinearViewerMuncher({
                                 }}
                               >
                                 <Juxta2Verbs
+                                  i18nRef={i18nRef}
+                                  debugRef={debugRef}
                                   morphArray={selectedMorph}
                                   lemma={s.lemma}
                                 />

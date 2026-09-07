@@ -9,7 +9,6 @@ import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
 import JuxtaDraftingEditor from "../components/juxtaMuncher/muncher/Editor/JuxtalinearDraftingEditor";
 import JuxtalinearViewerMuncher from "../components/juxtaMuncher/muncher/Viewer/JuxtalinearViewerMuncher";
-import { getFirstChapterJuxta } from "../components/juxtaMuncher/muncher/utils/getFirstChapterJuxta";
 import { WrapperNav } from "../components/juxtaMuncher/wrapperMuncher/WrapperNav";
 
 export function MuncherTest() {

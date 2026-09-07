@@ -1,6 +1,6 @@
 {
   "name": "core-contenthandler_juxta",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "private": false,
   "homepage": "/clients/core-contenthandler_juxta",
   "packageManager": "pnpm@11.20.0",
