@@ -3,6 +3,7 @@ import { ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./Home.css";
 import { MarkdownInput } from "./MarkdownInput";
+import { postEmptyJson } from "pankosmia-lib/http";
 
 const grid = 3;
 
@@ -31,6 +32,8 @@ function JuxtaEditable({
   itemArrays,
   originText,
   remakeSentences,
+  debugRef,
+  currentBookCode,
 }) {
   const remakeSentence = (stc) => remakeSentences([stc])[0];
 
@@ -162,6 +165,50 @@ function JuxtaEditable({
     });
     setGlobalSentences(curIndex, newSentence);
   };
+
+  const navigateToCv = (cv) => {
+    if (!cv || !currentBookCode) return;
+    const [chapter, verse] = cv.split(":");
+    postEmptyJson(
+      `/api/navigation/bcv/${currentBookCode}/${chapter}/${verse}/${verse}`,
+      debugRef?.current,
+    );
+  };
+
+  const navigateToCvRange = (cvs) => {
+    if (!cvs.length || !currentBookCode) return;
+    const parsed = cvs.map((cv) => cv.split(":").map(Number));
+    const chapter = parsed[0][0]; // we assume its the same chapter from in the chunk
+    const verses = parsed.map(([, v]) => v);
+    const startVerse = Math.min(...verses);
+    const endVerse = Math.max(...verses);
+    postEmptyJson(
+      `/api/navigation/bcv/${currentBookCode}/${chapter}/${startVerse}/${endVerse}`,
+      debugRef?.current,
+    );
+  };
+
+  const setAlignmentFromWord = (chunkIndex, wordIndex) => {
+    const wordOb = sentences[curIndex]?.chunks[chunkIndex]?.source[wordIndex];
+    if (!wordOb) return;
+    postEmptyJson(
+      `/api/app-state/snippet/${encodeURIComponent(wordOb.content)}`,
+      debugRef?.current,
+    );
+    navigateToCv(wordOb.cv);
+  };
+
+  const setAlignmentFromChunk = (chunkIndex) => {
+    const chunk = sentences[curIndex]?.chunks[chunkIndex];
+    if (!chunk) return;
+    const combined = chunk.source.map((s) => s.content).join(" ");
+    postEmptyJson(
+      `/api/app-state/snippet/${encodeURIComponent(combined)}`,
+      debugRef?.current,
+    );
+    navigateToCvRange(chunk.source.map((s) => s.cv).filter(Boolean));
+  };
+
   return (
     <Box display="flex" flexDirection="column">
       <Box flex={1} overflow="auto" p={2}>
@@ -188,6 +235,7 @@ function JuxtaEditable({
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
+                                onClick={() => setAlignmentFromWord(n, index)}
                                 onDoubleClick={() =>
                                   splitChunkHandler(n, index)
                                 }
@@ -229,7 +277,7 @@ function JuxtaEditable({
                 </Stack>
               </Grid>
 
-              <Grid>
+              <Grid onFocus={() => setAlignmentFromChunk(n)}>
                 <MarkdownInput
                   value={items.gloss}
                   onChange={(e) => glossChangeHandler(e, n)}

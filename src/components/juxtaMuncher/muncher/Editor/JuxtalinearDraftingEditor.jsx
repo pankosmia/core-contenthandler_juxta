@@ -168,6 +168,8 @@ function JuxtaDraftingEditor({
             itemArrays={itemArrays}
             originText={originText}
             remakeSentences={remakeSentences}
+            debugRef={debugRef}
+            currentBookCode={currentBookCode}
           />
         ) : (
           <Typography> loading ...</Typography>
