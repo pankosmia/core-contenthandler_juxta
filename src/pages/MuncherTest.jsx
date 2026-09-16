@@ -4,6 +4,7 @@ import {
   bcvContext,
   debugContext,
   i18nContext,
+  snippetContext,
 } from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
@@ -16,6 +17,7 @@ export function MuncherTest() {
   const { currentProjectRef } = useContext(currentProjectContext);
   const { debugRef } = useContext(debugContext);
   const { i18nRef } = useContext(i18nContext);
+  const { snippetRef } = useContext(snippetContext);
 
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
@@ -67,6 +69,7 @@ export function MuncherTest() {
               bcvRef={bcvRef}
               debugRef={debugRef}
               i18nRef={i18nRef}
+              snippetRef={snippetRef}
             />
           </Box>
         )}

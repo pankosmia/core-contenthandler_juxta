@@ -11,6 +11,7 @@ function JuxtalinearViewerMuncher({
   bcvRef,
   debugRef,
   i18nRef,
+  snippetRef,
 }) {
   const [ingredient, setIngredient] = useState([]);
 
@@ -68,6 +69,10 @@ function JuxtalinearViewerMuncher({
 
   const sentencePrintRef = `${uniqueVersesInSentence[0]}${uniqueVersesInSentence.length > 1 ? `-${uniqueVersesInSentence[uniqueVersesInSentence.length - 1].split(":")[1]}` : ""}`;
 
+  const snippetWords = snippetRef?.current
+    ? snippetRef.current.trim().split(/\s+/)
+    : [];
+
   return (
     <Stack sx={{ p: 1, alignItems: "center" }}>
       {/* {showNavigation && <Navigation/>} */}
@@ -108,6 +113,9 @@ function JuxtalinearViewerMuncher({
                       >
                         {c.source.map((s, idx) => {
                           const popoverId = `${s.content}-${idx}`;
+                          const isHighlighted = snippetWords.includes(
+                            s.content,
+                          );
                           return (
                             <>
                               <Typography
@@ -116,6 +124,10 @@ function JuxtalinearViewerMuncher({
                                   paddingRight: 1,
                                   mb: 0,
                                   cursor: "pointer",
+                                  backgroundColor: isHighlighted
+                                    ? "#FFD700"
+                                    : "transparent",
+                                  borderRadius: isHighlighted ? "2px" : 0,
                                 }}
                                 onClick={(event) => {
                                   setAnchorEl(event.currentTarget);
