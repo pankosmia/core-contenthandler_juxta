@@ -134,14 +134,18 @@ function JuxtaEditorTools({
   return (
     <Box
       sx={{
-        flexDirection: "row",
+        position: "fixed",
+        top: "48px",
+        left: 0,
+        right: 0,
         display: "flex",
+        padding: 2,
       }}
     >
       <Grid
         container
         sx={{
-          alignItems: "center",
+          alignItems: "flex-start",
           width: "100%",
           justifyContent: "space-between",
         }}
