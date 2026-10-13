@@ -1,6 +1,6 @@
 {
   "name": "core-contenthandler_juxta",
-  "version": "0.2.13",
+  "version": "0.2.15",
   "private": false,
   "homepage": "/clients/core-contenthandler_juxta",
   "packageManager": "pnpm@11.20.0",
@@ -28,6 +28,7 @@
     "vite": "^6.0.7"
   },
   "peerDependencies": {
+    "pankosmia-rcl": "^0.7.1",
     "notistack": "^3.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
