@@ -27,7 +27,17 @@ export default defineConfig(({ mode }) => {
           sourcemap: true,
 
           rollupOptions: {
-            external: ["react", "react-dom", "react-router-dom", "notistack"],
+            external: [
+              "react",
+              "react-dom",
+              "react-router-dom",
+              "notistack",
+              "pankosmia-rcl",
+
+              /^@mui\//,
+              /^@emotion\//,
+            ],
+
             output: {
               name: "juxtaMunchersRcl",
               globals: {
@@ -35,6 +45,7 @@ export default defineConfig(({ mode }) => {
                 "react-dom": "ReactDOM",
                 "react-router-dom": "ReactRouterDOM",
                 notistack: "notistack",
+                "pankosmia-rcl": "pankosmiaRcl",
               },
             },
           },
