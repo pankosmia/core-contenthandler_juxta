@@ -4,10 +4,8 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./pages/App";
 import { MuncherTest } from "./pages/MuncherTest";
-import { useState, useEffect } from "react";
-import { createTheme, styled, ThemeProvider } from "@mui/material";
+import { styled } from "@mui/material";
 import { MaterialDesignContent, SnackbarProvider } from "notistack";
-import { getAndSetJson } from "pankosmia-lib/http";
 const router = createHashRouter([
   {
     path: "/",
@@ -20,33 +18,6 @@ const router = createHashRouter([
 ]);
 
 function AppLayout() {
-  const [themeSpec, setThemeSpec] = useState({
-    palette: {
-      primary: {
-        main: "#666",
-      },
-      secondary: {
-        main: "#888",
-      },
-    },
-  });
-
-  useEffect(() => {
-    if (
-      themeSpec.palette &&
-      themeSpec.palette.primary &&
-      themeSpec.palette.primary.main &&
-      themeSpec.palette.primary.main === "#666"
-    ) {
-      getAndSetJson({
-        url: "/api/app-resources/themes/default.json",
-        setter: setThemeSpec,
-      }).then();
-    }
-  }, []);
-
-  const theme = createTheme(themeSpec);
-
   const CustomSnackbarContent = styled(MaterialDesignContent)(() => ({
     "&.notistack-MuiContent-error": {
       backgroundColor: "#FDEDED",
@@ -67,7 +38,7 @@ function AppLayout() {
   }));
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <SnackbarProvider
         Components={{
           error: CustomSnackbarContent,
@@ -80,7 +51,7 @@ function AppLayout() {
       <SpaContainer>
         <RouterProvider router={router} />
       </SpaContainer>
-    </ThemeProvider>
+    </>
   );
 }
 createRoot(document.getElementById("root")).render(<AppLayout />);
