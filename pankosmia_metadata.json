@@ -1,6 +1,7 @@
 {
   "id": "core-contenthandler_juxta",
   "minServerVersion": "0.16.1",
+  "exclude_from_menu": true,
   "require": {
     "net": false,
     "debug": true
