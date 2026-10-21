@@ -9,10 +9,6 @@ import { MaterialDesignContent, SnackbarProvider } from "notistack";
 const router = createHashRouter([
   {
     path: "/",
-    element: <App />,
-  },
-  {
-    path: "/MuncherTest",
     element: <MuncherTest />,
   },
 ]);
