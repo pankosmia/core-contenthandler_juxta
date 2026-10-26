@@ -1,0 +1,294 @@
+import { Box, Button, Grid, Stack } from "@mui/material";
+import { ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import "./Home.css";
+import { MarkdownInput } from "./MarkdownInput";
+import { postEmptyJson } from "pankosmia-lib/http";
+
+const grid = 3;
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  userSelect: "none",
+  padding: grid * 2,
+  margin: `0 ${grid}px 0 0`,
+  background: isDragging ? "lightgreen" : "lightgrey",
+  ...draggableStyle,
+});
+
+const getListStyle = (isDraggingOver) => ({
+  background: isDraggingOver ? "lightblue" : "lightgrey",
+  display: "flex",
+  padding: grid,
+  overflow: "auto",
+});
+
+function JuxtaEditable({
+  metadata,
+  ingredient,
+  setGlobalItemArrays,
+  setGlobalSentences,
+  curIndex,
+  sentences,
+  itemArrays,
+  originText,
+  remakeSentences,
+  debugRef,
+  currentBookCode,
+}) {
+  const remakeSentence = (stc) => remakeSentences([stc])[0];
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const move = (source, destination, src, dest) => {
+    const sourceClone = [...source];
+    const destClone = [...destination];
+    const [removed] = sourceClone.splice(src.index, 1);
+    destClone.splice(dest.index, 0, removed);
+    return {
+      [src.droppableId]: sourceClone,
+      [dest.droppableId]: destClone,
+    };
+  };
+
+  const onDragEnd = ({ source, destination }) => {
+    if (!destination) return;
+
+    const sInd = +source.droppableId;
+    const dInd = +destination.droppableId;
+    const newChunks = [...sentences[curIndex].chunks];
+
+    if (sInd === dInd) {
+      newChunks[sInd].source = reorder(
+        newChunks[sInd].source,
+        source.index,
+        destination.index,
+      );
+    } else {
+      const res = move(
+        newChunks[sInd].source,
+        newChunks[dInd].source,
+        source,
+        destination,
+      );
+      newChunks[sInd].source = res[sInd];
+      newChunks[dInd].source = res[dInd];
+      newChunks[sInd].gloss = "";
+      newChunks[dInd].gloss = "";
+    }
+
+    setGlobalSentences(
+      curIndex,
+      remakeSentence({
+        originalSource: sentences[curIndex].originalSource,
+        chunks: newChunks,
+        sourceString: sentences[curIndex].sourceString,
+      }),
+    );
+  };
+
+  const glossChangeHandler = (e, n) => {
+    const newItemArrays = [...itemArrays[curIndex]];
+    const newChunks = [...sentences[curIndex].chunks];
+
+    newItemArrays[n].gloss = e.target.value;
+    newChunks[n].gloss = e.target.value;
+
+    setGlobalItemArrays(curIndex, newItemArrays);
+    setGlobalSentences(curIndex, {
+      originalSource: sentences[curIndex].originalSource,
+      chunks: newChunks,
+      sourceString: sentences[curIndex].sourceString,
+    });
+  };
+  const chunkUpHandler = (n) => {
+    const newChunks = [...sentences[curIndex].chunks];
+    [newChunks[n - 1], newChunks[n]] = [newChunks[n], newChunks[n - 1]];
+
+    const newSentence = remakeSentence({
+      originalSource: sentences[curIndex].originalSource,
+      chunks: newChunks,
+      sourceString: sentences[curIndex].sourceString,
+    });
+    setGlobalSentences(curIndex, newSentence);
+  };
+
+  const chunkDownHandler = (n) => {
+    const newChunks = [...sentences[curIndex].chunks];
+    [newChunks[n], newChunks[n + 1]] = [newChunks[n + 1], newChunks[n]];
+
+    const newSentence = remakeSentence({
+      originalSource: sentences[curIndex].originalSource,
+      chunks: newChunks,
+      sourceString: sentences[curIndex].sourceString,
+    });
+    setGlobalSentences(curIndex, newSentence);
+  };
+  const splitChunkHandler = (chunkIndex, wordIndex) => {
+    // CASE 1: fuse with chunk above (double-clicked first word of a non-first chunk)
+    if (chunkIndex > 0 && wordIndex === 0) {
+      const newChunks = [...sentences[curIndex].chunks];
+      const prevChunk = newChunks[chunkIndex - 1];
+      const currChunk = newChunks[chunkIndex];
+      // Merge current chunk's source words into the previous chunk
+      const mergedChunk = {
+        gloss: "",
+        source: [...prevChunk.source, ...currChunk.source],
+      };
+      newChunks.splice(chunkIndex - 1, 2, mergedChunk);
+      const newSentence = remakeSentence({
+        originalSource: sentences[curIndex].originalSource,
+        chunks: newChunks,
+        sourceString: sentences[curIndex].sourceString,
+      });
+      setGlobalSentences(curIndex, newSentence);
+      return;
+    }
+    // CASE 2: normal chunk split (unchanged)
+    const newChunks = [...sentences[curIndex].chunks];
+    const chunk = newChunks[chunkIndex];
+    const left = chunk.source.slice(0, wordIndex);
+    const right = chunk.source.slice(wordIndex);
+    if (!left.length || !right.length) return;
+    const leftChunk = { ...chunk, source: left };
+    const rightChunk = { ...chunk, source: right, gloss: "" };
+    newChunks.splice(chunkIndex, 1, leftChunk, rightChunk);
+    newChunks.gloss = "";
+    const newSentence = remakeSentence({
+      originalSource: sentences[curIndex].originalSource,
+      chunks: newChunks,
+      sourceString: sentences[curIndex].sourceString,
+    });
+    setGlobalSentences(curIndex, newSentence);
+  };
+
+  const navigateToCv = (cv) => {
+    if (!cv || !currentBookCode) return;
+    const [chapter, verse] = cv.split(":");
+    postEmptyJson(
+      `/api/navigation/bcv/${currentBookCode}/${chapter}/${verse}/${verse}`,
+      debugRef?.current,
+    );
+  };
+
+  const navigateToCvRange = (cvs) => {
+    if (!cvs.length || !currentBookCode) return;
+    const parsed = cvs.map((cv) => cv.split(":").map(Number));
+    const chapter = parsed[0][0]; // we assume its the same chapter from in the chunk
+    const verses = parsed.map(([, v]) => v);
+    const startVerse = Math.min(...verses);
+    const endVerse = Math.max(...verses);
+    postEmptyJson(
+      `/api/navigation/bcv/${currentBookCode}/${chapter}/${startVerse}/${endVerse}`,
+      debugRef?.current,
+    );
+  };
+
+  const setAlignmentFromWord = (chunkIndex, wordIndex) => {
+    const wordOb = sentences[curIndex]?.chunks[chunkIndex]?.source[wordIndex];
+    if (!wordOb) return;
+    postEmptyJson(
+      `/api/app-state/snippet/${encodeURIComponent(wordOb.content)}`,
+      debugRef?.current,
+    );
+    navigateToCv(wordOb.cv);
+  };
+
+  const setAlignmentFromChunk = (chunkIndex) => {
+    const chunk = sentences[curIndex]?.chunks[chunkIndex];
+    if (!chunk) return;
+    const combined = chunk.source.map((s) => s.content).join(" ");
+    postEmptyJson(
+      `/api/app-state/snippet/${encodeURIComponent(combined)}`,
+      debugRef?.current,
+    );
+    navigateToCvRange(chunk.source.map((s) => s.cv).filter(Boolean));
+  };
+
+  return (
+    <Box display="flex" flexDirection="column">
+      <Box flex={1} overflow="auto" p={2}>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {itemArrays[curIndex]?.map((items, n) => (
+            <Grid container key={n}>
+              <Grid size={{ sm: 6 }}>
+                <Stack direction="row" sx={{ justifyContent: "flex-end" }}>
+                  <Droppable droppableId={`${n}`} direction="horizontal">
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        style={getListStyle(snapshot.isDraggingOver)}
+                      >
+                        {items.chunk.map((item, index) => (
+                          <Draggable
+                            key={item.id}
+                            draggableId={item.id}
+                            index={index}
+                          >
+                            {(provided, snapshot) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                onClick={() => setAlignmentFromWord(n, index)}
+                                onDoubleClick={() =>
+                                  splitChunkHandler(n, index)
+                                }
+                                style={getItemStyle(
+                                  snapshot.isDragging,
+                                  provided.draggableProps.style,
+                                )}
+                              >
+                                <Stack direction="row" gap={1}>
+                                  <Box>{item.content}</Box>
+                                  {item.index ? (
+                                    <Box fontSize={10}>{item.index + 1}</Box>
+                                  ) : null}
+                                </Stack>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
+                  <Stack justifyContent="center">
+                    <Button
+                      sx={{ padding: 0 }}
+                      onClick={() => chunkUpHandler(n)}
+                      disabled={!n}
+                    >
+                      <ArrowDropUp />
+                    </Button>
+                    <Button
+                      sx={{ padding: 0 }}
+                      onClick={() => chunkDownHandler(n)}
+                      disabled={n === itemArrays[curIndex].length - 1}
+                    >
+                      <ArrowDropDown />
+                    </Button>
+                  </Stack>
+                </Stack>
+              </Grid>
+
+              <Grid onFocus={() => setAlignmentFromChunk(n)}>
+                <MarkdownInput
+                  value={items.gloss}
+                  onChange={(e) => glossChangeHandler(e, n)}
+                />
+              </Grid>
+            </Grid>
+          ))}
+        </DragDropContext>
+      </Box>
+    </Box>
+  );
+}
+
+export default JuxtaEditable;

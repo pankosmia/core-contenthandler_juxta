@@ -1,0 +1,61 @@
+{
+  "name": "pankosmia-juxta-muncher",
+  "version": "0.2.18",
+  "private": false,
+  "homepage": "https://github.com/pankosmia/core-contenthandler_juxta",
+  "main": "munchersPackageExport/juxta-muncher-rcl.umd.js",
+  "module": "munchersPackageExport/juxta-muncher-rcl.es.js",
+  "files": [
+    "munchersPackageExport"
+  ],
+  "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
+    "md5": "^2.3.0",
+    "pankosmia-lib": "^0.0.3",
+    "react-router-dom": "^7.18.2"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "9.3.1",
+    "@mui/material": "9.3.1",
+    "notistack": "^3.0.2",
+    "pankosmia-rcl": "^0.7.11",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "9.3.1",
+    "@mui/material": "9.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.7",
+    "prettier": "3.8.1",
+    "husky": "^9.1.7"
+  },
+  "scripts": {
+    "build": "vite build",
+    "build:package": "vite build --mode isMuncher",
+    "dev": "vite",
+    "prepare": "husky"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
