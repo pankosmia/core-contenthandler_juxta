@@ -1,4 +1,4 @@
-import { getJson, postEmptyJson } from "pankosmia-lib/http";
+import { getJson, postEmpty } from "pankosmia-lib/http";
 
 export async function getFirstChapterJuxta(
   currentProjectRefCurr,
@@ -13,7 +13,7 @@ export async function getFirstChapterJuxta(
   if (responce.ok) {
     let [chapter, verse] = responce.json[0].chunks[0].source[0].cv.split(":");
 
-    let postResponse = await postEmptyJson(
+    let postResponse = await postEmpty(
       `/api/navigation/bcv/${bookCode}/${chapter}/${verse}`,
       debugRefCurr,
     );

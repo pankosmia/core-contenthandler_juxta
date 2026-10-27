@@ -3,7 +3,7 @@ import { ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import "./Home.css";
 import { MarkdownInput } from "./MarkdownInput";
-import { postEmptyJson } from "pankosmia-lib/http";
+import { postEmpty } from "pankosmia-lib/http";
 
 const grid = 3;
 
@@ -169,7 +169,7 @@ function JuxtaEditable({
   const navigateToCv = (cv) => {
     if (!cv || !currentBookCode) return;
     const [chapter, verse] = cv.split(":");
-    postEmptyJson(
+    postEmpty(
       `/api/navigation/bcv/${currentBookCode}/${chapter}/${verse}/${verse}`,
       debugRef?.current,
     );
@@ -182,7 +182,7 @@ function JuxtaEditable({
     const verses = parsed.map(([, v]) => v);
     const startVerse = Math.min(...verses);
     const endVerse = Math.max(...verses);
-    postEmptyJson(
+    postEmpty(
       `/api/navigation/bcv/${currentBookCode}/${chapter}/${startVerse}/${endVerse}`,
       debugRef?.current,
     );
@@ -191,7 +191,7 @@ function JuxtaEditable({
   const setAlignmentFromWord = (chunkIndex, wordIndex) => {
     const wordOb = sentences[curIndex]?.chunks[chunkIndex]?.source[wordIndex];
     if (!wordOb) return;
-    postEmptyJson(
+    postEmpty(
       `/api/app-state/snippet/${encodeURIComponent(wordOb.content)}`,
       debugRef?.current,
     );
@@ -202,7 +202,7 @@ function JuxtaEditable({
     const chunk = sentences[curIndex]?.chunks[chunkIndex];
     if (!chunk) return;
     const combined = chunk.source.map((s) => s.content).join(" ");
-    postEmptyJson(
+    postEmpty(
       `/api/app-state/snippet/${encodeURIComponent(combined)}`,
       debugRef?.current,
     );
