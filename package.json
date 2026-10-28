@@ -11,7 +11,7 @@
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
     "md5": "^2.3.0",
-    "pankosmia-lib": "^0.0.3",
+    "pankosmia-lib": "^0.0.5",
     "react-router-dom": "^7.18.2"
   },
   "peerDependencies": {

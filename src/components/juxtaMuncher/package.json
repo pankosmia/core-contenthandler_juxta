@@ -11,7 +11,7 @@
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
     "md5": "^2.3.0",
-    "pankosmia-lib": "^0.0.3",
+    "pankosmia-lib": "^0.0.5",
     "react-router-dom": "^7.18.2"
   },
   "peerDependencies": {
@@ -20,7 +20,7 @@
     "@mui/icons-material": "9.3.1",
     "@mui/material": "9.3.1",
     "notistack": "^3.0.2",
-    "pankosmia-rcl": "^0.7.11",
+    "pankosmia-rcl": "^0.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

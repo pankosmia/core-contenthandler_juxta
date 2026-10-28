@@ -5,6 +5,7 @@ import {
   debugContext,
   i18nContext,
   snippetContext,
+  Header,
 } from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
@@ -54,13 +55,30 @@ export function MuncherTest() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        margin: 3,
-        height: "98vh",
+        height: "100%",
+        overflow: "hidden",
       }}
     >
-      <WrapperNav flavor={"x-juxtalinear"} />
+      <Box sx={{ flexShrink: 0 }}>
+        <Header
+          titleKey={"pages:core-contenthandler_juxta:titleMuncherTest"}
+          currentId="content"
+          requireNet={false}
+        />
+      </Box>
+      <Box sx={{ paddingLeft: 2, paddingTop: 10, flexShrink: 0 }}>
+        <WrapperNav flavor={"x-juxtalinear"} />
+      </Box>
 
-      <Box sx={{ display: "flex", width: "100%", overflowY: "scroll" }}>
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: "auto",
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
         {metadata && (
           <Box sx={{ flex: 1, margin: 2 }}>
             <JuxtalinearViewerMuncher

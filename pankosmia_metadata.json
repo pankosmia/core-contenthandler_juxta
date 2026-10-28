@@ -1,7 +1,6 @@
 {
   "id": "core-contenthandler_juxta",
-  "minServerVersion": "0.16.1",
-  "exclude_from_menu": true,
+  "minServerVersion": "0.20.3",
   "require": {
     "net": false,
     "debug": true
@@ -18,13 +17,16 @@
   },
   "i18n": {
     "title": {
-      "en": "contenthandler-template"
+      "en": "core-contenthandler_juxta"
     },
     "summary": {
-      "en": "contenthandler-template"
+      "en": "core-contenthandler_juxta"
     },
     "stub_content": {
       "en": "Content goes here"
+    },
+    "titleMuncherTest": {
+      "en": "Flavor x-juxtalinear"
     },
     "saved": {
       "en": "Saved",
