@@ -17,10 +17,10 @@
   },
   "i18n": {
     "title": {
-      "en": "contenthandler-template"
+      "en": "core-contenthandler_juxta"
     },
     "summary": {
-      "en": "contenthandler-template"
+      "en": "core-contenthandler_juxta"
     },
     "stub_content": {
       "en": "Content goes here"
