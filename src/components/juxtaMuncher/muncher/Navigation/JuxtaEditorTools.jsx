@@ -3,7 +3,7 @@ import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 import BookPicker from "./BookPicker";
 import md5sum from "md5";
 import { useEffect, useState } from "react";
-import { getJson, postEmptyJson } from "pankosmia-lib/http";
+import { getJson, postEmpty } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import { useNavigate } from "react-router-dom";
 import JuxtaSaveButton from "./JuxtaSaveButton";
@@ -71,7 +71,7 @@ function JuxtaEditorTools({
 
   useEffect(() => {
     if (currentBookCode) {
-      postEmptyJson(
+      postEmpty(
         `/api/navigation/bcv/${currentBookCode}/${currentChapter()}/${startVerse()}`,
         debugRef.current,
       );
