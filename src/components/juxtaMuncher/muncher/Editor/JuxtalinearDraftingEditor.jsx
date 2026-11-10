@@ -4,25 +4,27 @@ import { Box, Typography } from "@mui/material";
 import md5sum from "md5";
 import JuxtaEditorTools from "../Navigation/JuxtaEditorTools";
 import JuxtaEditable from "./EditorTools/JuxtaEditable";
-
+import { enqueueSnackbar } from "notistack";
+import { doI18n } from "pankosmia-lib/i18n";
 function JuxtaDraftingEditor({
   metadata,
   modified,
   setModified,
+  navigation,
   bcvRef,
   debugRef,
   i18nRef,
   currentProjectRef,
+  navigationEnable = true,
 }) {
+  const { currentBookCode, curIndex, setCurIndex, sentences, setSentences } =
+    navigation;
   const [md5sumScriptureJson, setMd5sumScriptureJson] = useState([]);
-  const [currentBookCode, setCurrentBookCode] = useState(null);
   const [ingredient, setIngredient] = useState(null);
 
   const [fileName, setFileName] = useState("");
-  const [sentences, setSentences] = useState([]);
   const [originText, setOriginText] = useState([]);
   const [itemArrays, setItemArrays] = useState([]);
-  const [curIndex, setCurIndex] = useState(0);
   const [textDir, setTextDir] = useState(
     metadata?.script_direction
       ? metadata.script_direction.toLowerCase()
@@ -126,7 +128,7 @@ function JuxtaDraftingEditor({
           setIngredient(response.json);
         } else {
           enqueueSnackbar(
-            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
+            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.error.reason}`,
             { variant: "error" },
           );
           setIngredient([]);
@@ -138,23 +140,21 @@ function JuxtaDraftingEditor({
 
   return (
     <>
-      <JuxtaEditorTools
-        metadata={metadata}
-        JuxtaEditorToolsEditorTools
-        modified={modified}
-        setModified={setModified}
-        md5sumScriptureJson={md5sumScriptureJson}
-        setMd5sumScriptureJson={setMd5sumScriptureJson}
-        currentBookCode={currentBookCode}
-        setCurrentBookCode={setCurrentBookCode}
-        curIndex={curIndex}
-        setCurIndex={setCurIndex}
-        sentences={sentences}
-        bcvRef={bcvRef}
-        debugRef={debugRef}
-        i18nRef={i18nRef}
-        currentProjectRef={currentProjectRef}
-      />
+      {navigationEnable && (
+        <JuxtaEditorTools
+          metadata={metadata}
+          modified={modified}
+          setModified={setModified}
+          md5sumScriptureJson={md5sumScriptureJson}
+          setMd5sumScriptureJson={setMd5sumScriptureJson}
+          curIndex={curIndex}
+          sentences={sentences}
+          bcvRef={bcvRef}
+          debugRef={debugRef}
+          i18nRef={i18nRef}
+          currentProjectRef={currentProjectRef}
+        />
+      )}
       {/** If SB does not specify direction then it is set here, otherwise it has already been set per SB in WorkspaceCard */}
       <Box dir={!sbScriptDirSet ? textDir : undefined}>
         {ingredient ? (

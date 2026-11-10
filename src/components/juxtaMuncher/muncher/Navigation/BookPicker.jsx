@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, MenuItem, TextField } from "@mui/material";
 import { getJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
-
+import { enqueueSnackbar } from "notistack";
 function BookPicker({
   setFirstChapter,
   bcvRef,
@@ -27,7 +27,7 @@ function BookPicker({
           setCurrentBook(fullMetadataResponse.json.book_codes[0]);
         } else {
           enqueueSnackbar(
-            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}:  ${fullMetadataResponse.error.reason} ${fullMetadataResponse.status}`,
             { variant: "error" },
           );
         }
@@ -38,7 +38,12 @@ function BookPicker({
 
   useEffect(() => {
     if (currentBook && bcvRef.current.bookCode !== currentBook) {
-      setFirstChapter(currentProjectRef.current, debugRef.current, currentBook);
+      setFirstChapter(
+        currentProjectRef.current,
+        debugRef.current,
+        currentBook,
+        i18nRef,
+      );
     }
   }, [currentBook]);
 

@@ -2,6 +2,8 @@ import { MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { currentProjectContext } from "pankosmia-rcl";
 import { getJson, postEmpty } from "pankosmia-lib/http";
+import { enqueueSnackbar } from "notistack";
+import { doI18n } from "pankosmia-lib/i18n";
 
 export function BurritoSelect({ flavor }) {
   const { currentProjectRef } = useContext(currentProjectContext);
@@ -13,7 +15,7 @@ export function BurritoSelect({ flavor }) {
       let response = await getJson("/api/burrito/metadata/summaries");
       if (!response.ok) {
         enqueueSnackbar(
-          `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
+          `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.error.reason}  ${response.status}`,
           { variant: "error" },
         );
         return;
