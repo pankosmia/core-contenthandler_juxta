@@ -6,6 +6,7 @@ import App from "./pages/App";
 import { MuncherTest } from "./pages/MuncherTest";
 import { styled } from "@mui/material";
 import { MaterialDesignContent, SnackbarProvider } from "notistack";
+import { JuxtaNavigationProvider } from "./components/juxtaMuncher/muncher";
 const router = createHashRouter([
   {
     path: "/",
@@ -45,7 +46,9 @@ function AppLayout() {
         maxSnack={6}
       />
       <SpaContainer>
-        <RouterProvider router={router} />
+        <JuxtaNavigationProvider>
+          <RouterProvider router={router} />
+        </JuxtaNavigationProvider>
       </SpaContainer>
     </>
   );

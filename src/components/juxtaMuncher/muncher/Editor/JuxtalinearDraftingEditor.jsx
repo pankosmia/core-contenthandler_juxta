@@ -149,6 +149,7 @@ function JuxtaDraftingEditor({
           setMd5sumScriptureJson={setMd5sumScriptureJson}
           curIndex={curIndex}
           sentences={sentences}
+          navigation={navigation}
           bcvRef={bcvRef}
           debugRef={debugRef}
           i18nRef={i18nRef}

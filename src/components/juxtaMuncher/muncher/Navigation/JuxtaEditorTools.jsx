@@ -6,7 +6,6 @@ import { doI18n } from "pankosmia-lib/i18n";
 import { useNavigate } from "react-router-dom";
 import JuxtaSaveButton from "./JuxtaSaveButton";
 import JuxtaNavigation from "./JuxtaNavigation";
-import useJuxtaNavigation from "./useJuxtaNavigation";
 
 function JuxtaEditorTools({
   metadata,
@@ -16,13 +15,13 @@ function JuxtaEditorTools({
   setMd5sumScriptureJson,
   curIndex,
   sentences,
+  navigation,
   bcvRef,
   debugRef,
   i18nRef,
   currentProjectRef,
 }) {
   const navigate = useNavigate();
-  const navigation = useJuxtaNavigation();
 
   useEffect(() => {
     const isElectron = !!window.electronAPI;

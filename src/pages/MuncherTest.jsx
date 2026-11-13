@@ -14,7 +14,7 @@ import {
   JuxtaDraftingEditor,
   JuxtalinearViewerMuncher,
   JuxtaNavigation,
-  useJuxtaNavigation,
+  useJuxtaNavigationContext,
 } from "../components/juxtaMuncher/muncher";
 import { WrapperNav } from "../components/juxtaMuncher/wrapperMuncher/WrapperNav";
 import { enqueueSnackbar } from "notistack";
@@ -29,7 +29,7 @@ export function MuncherTest() {
 
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
-  const navigation = useJuxtaNavigation();
+  const navigation = useJuxtaNavigationContext();
   useEffect(() => {
     async function getSummary() {
       if (currentProjectRef.current) {
