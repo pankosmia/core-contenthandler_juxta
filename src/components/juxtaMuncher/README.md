@@ -14,6 +14,44 @@ A component that allows users to edit a Juxtalinear.
 
 It provides the editing interface required to create and modify Juxtalinear content.
 
+It requires a `navigation` prop, the object returned by `useJuxtaNavigation()`, which is shared with `JuxtaNavigation`.
+
+---
+
+### `JuxtaNavigation` and `useJuxtaNavigation`
+
+`JuxtaNavigation` provides the book picker and sentence navigation. It can be rendered anywhere, for example inside an `AdvancedAppBar`.
+
+`useJuxtaNavigation()` holds the navigation state (`currentBookCode`, `curIndex`, `sentences`). Call it once in the parent, then spread it into `JuxtaNavigation` and pass it as `navigation` to `JuxtaDraftingEditor`.
+
+```jsx
+const navigation = useJuxtaNavigation();
+
+<AdvancedAppBar
+  navigation={
+    <JuxtaNavigation
+      metadata={metadata}
+      modified={modified}
+      {...navigation}
+      bcvRef={bcvRef}
+      debugRef={debugRef}
+      i18nRef={i18nRef}
+      currentProjectRef={currentProjectRef}
+    />
+  }
+/>
+<JuxtaDraftingEditor
+  metadata={metadata}
+  modified={modified}
+  setModified={setModified}
+  navigation={navigation}
+  bcvRef={bcvRef}
+  debugRef={debugRef}
+  i18nRef={i18nRef}
+  currentProjectRef={currentProjectRef}
+/>
+```
+
 ---
 
 ### `JuxtalinearViewerMuncher`
@@ -26,9 +64,7 @@ It is intended for read-only visualization use cases where editing capabilities 
 
 ### `JuxtaEditorTools`
 
-A set of tools used inside `JuxtaDraftingEditor`.
-
-It provides navigation features, including sentence-based navigation within a Juxtalinear document.
+A set of tools used inside `JuxtaDraftingEditor` (save and edit buttons, unsaved-changes tracking).
 
 ---
 

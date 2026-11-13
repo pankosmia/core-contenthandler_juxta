@@ -1,4 +1,7 @@
 import { getJson, postEmpty, getText } from "pankosmia-lib/http";
+import { enqueueSnackbar } from "notistack";
+import { doI18n } from "pankosmia-lib/i18n";
+
 export async function getFirstChapterTextTranslation(
   currentProjectRefCurr,
   debugRefCurr,
@@ -23,6 +26,7 @@ export async function getFirstChapterJuxta(
   currentProjectRefCurr,
   debugRefCurr,
   bookCode,
+  i18nRef,
 ) {
   const projectPath = `${currentProjectRefCurr.source}/${currentProjectRefCurr.organization}/${currentProjectRefCurr.project}`;
   const responce = await getJson(
@@ -37,13 +41,13 @@ export async function getFirstChapterJuxta(
     );
     if (!responsePost.ok) {
       enqueueSnackbar(
-        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${responsePost.status}`,
+        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}:  ${responsePost.error.reason} ${responsePost.status}`,
         { variant: "error" },
       );
     }
   } else {
     enqueueSnackbar(
-      `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
+      `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${responce.error.reason} ${responce.status}`,
       { variant: "error" },
     );
   }

@@ -3,6 +3,7 @@ import { Box, Grid, Popover, Stack, Typography } from "@mui/material";
 import { getJson } from "pankosmia-lib/http";
 import { doI18n } from "pankosmia-lib/i18n";
 import Juxta2Verbs from "./ViewerTools/juxta2verbs";
+import { enqueueSnackbar } from "notistack";
 
 function JuxtalinearViewerMuncher({
   metadata,
@@ -26,7 +27,7 @@ function JuxtalinearViewerMuncher({
       setIngredient(response.json);
     } else {
       enqueueSnackbar(
-        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${response.status}`,
+        `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}:  ${response.error.reason}  ${response.status}`,
         { variant: "error" },
       );
       setIngredient([]);

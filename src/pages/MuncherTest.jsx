@@ -6,12 +6,19 @@ import {
   i18nContext,
   snippetContext,
   Header,
+  AdvancedAppBar,
 } from "pankosmia-rcl";
 import { useContext, useState, useEffect } from "react";
 import { getJson } from "pankosmia-lib/http";
-import JuxtaDraftingEditor from "../components/juxtaMuncher/muncher/Editor/JuxtalinearDraftingEditor";
-import JuxtalinearViewerMuncher from "../components/juxtaMuncher/muncher/Viewer/JuxtalinearViewerMuncher";
+import {
+  JuxtaDraftingEditor,
+  JuxtalinearViewerMuncher,
+  JuxtaNavigation,
+  useJuxtaNavigationContext,
+} from "../components/juxtaMuncher/muncher";
 import { WrapperNav } from "../components/juxtaMuncher/wrapperMuncher/WrapperNav";
+import { enqueueSnackbar } from "notistack";
+import { doI18n } from "pankosmia-lib/i18n";
 
 export function MuncherTest() {
   const { bcvRef } = useContext(bcvContext);
@@ -22,7 +29,7 @@ export function MuncherTest() {
 
   const [currentBurrito, setCurrentBurrito] = useState(null);
   const [modified, setModified] = useState(false);
-
+  const navigation = useJuxtaNavigationContext();
   useEffect(() => {
     async function getSummary() {
       if (currentProjectRef.current) {
@@ -35,7 +42,7 @@ export function MuncherTest() {
           setCurrentBurrito([projectPath, entry]);
         } else {
           enqueueSnackbar(
-            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}: ${fullMetadataResponse.status}`,
+            `${doI18n("pages:core-contenthandler_juxta:error", i18nRef.current)}:  ${responsePost.error.reason} ${fullMetadataResponse.status}`,
             { variant: "error" },
           );
         }
@@ -66,7 +73,22 @@ export function MuncherTest() {
           requireNet={false}
         />
       </Box>
-      <Box sx={{ paddingLeft: 2, paddingTop: 10, flexShrink: 0 }}>
+      <AdvancedAppBar
+        navigation={
+          metadata && (
+            <JuxtaNavigation
+              metadata={metadata}
+              modified={modified}
+              {...navigation}
+              bcvRef={bcvRef}
+              debugRef={debugRef}
+              i18nRef={i18nRef}
+              currentProjectRef={currentProjectRef}
+            />
+          )
+        }
+      />
+      <Box sx={{ paddingLeft: 2, paddingTop: 2, flexShrink: 0 }}>
         <WrapperNav flavor={"x-juxtalinear"} />
       </Box>
 
@@ -98,11 +120,13 @@ export function MuncherTest() {
               key={metadata.local_path}
               modified={modified}
               setModified={setModified}
+              navigation={navigation}
               metadata={metadata}
               bcvRef={bcvRef}
               debugRef={debugRef}
               i18nRef={i18nRef}
               currentProjectRef={currentProjectRef}
+              navigationEnable={false}
             />
           </Box>
         )}

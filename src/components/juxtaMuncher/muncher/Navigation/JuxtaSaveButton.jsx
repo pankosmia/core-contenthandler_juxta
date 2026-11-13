@@ -38,7 +38,7 @@ function JuxtaSaveButton({
       setMd5sumScriptureJson(md5sum(JSON.stringify(sentences[curIndex])));
     } else {
       enqueueSnackbar(
-        `${doI18n("pages:core-local-workspace:save_error", i18nRef.current)}: ${response.status}`,
+        `${doI18n("pages:core-local-workspace:save_error", i18nRef.current)}:. ${response.error.reason} ${response.status}`,
         { variant: "error" },
       );
     }
